@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import bcrypt from "bcryptjs";
 const userSchmea = new mongoose.Schema(
   {
     username: {
@@ -8,6 +8,7 @@ const userSchmea = new mongoose.Schema(
     },
     bio: {
       type: String,
+      default: "",
     },
     email: {
       type: String,
@@ -17,6 +18,8 @@ const userSchmea = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      minlength: 8,
+      select: false,
     },
     image: {
       type: String,
@@ -28,5 +31,19 @@ const userSchmea = new mongoose.Schema(
   }
 );
 
+userSchmea.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+userSchmea.methods.matchPassword = async function (enteredPassword) {
+  console.log(this.password);
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
 const User = mongoose.model("User", userSchmea);
+
 export default User;

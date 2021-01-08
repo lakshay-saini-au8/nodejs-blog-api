@@ -60,3 +60,12 @@ export const articleUpdateValidation = (body) => {
     body
   );
 };
+
+export const commentValidation = (body) => {
+  return joiValidate(
+    {
+      body: Joi.string().trim().min(1).required(),
+    },
+    body
+  );
+};

@@ -7,9 +7,10 @@ import User from "../models/User.model.js";
 
 export const getProfile = asyncHandler(async (req, res) => {
   // find user
-  const user = await User.findOne({ username: req.params.username }).select(
-    "username bio image"
-  );
+  const user = await User.findOne({ username: req.params.username }).populate({
+    path: "followers following",
+    select: "username bio image",
+  });
   if (user) {
     res.status(200).json({ profile: user });
   } else {

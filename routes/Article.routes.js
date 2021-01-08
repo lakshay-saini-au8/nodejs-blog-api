@@ -16,4 +16,6 @@ router
   .delete(protect, deletSingleArticle)
   .put(protect, updateArticle);
 
+router.route("/:slug/comments");
+
 export default router;

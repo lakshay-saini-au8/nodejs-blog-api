@@ -25,6 +25,8 @@ const userSchmea = new mongoose.Schema(
       type: String,
       default: "https://static.productionready.io/images/smiley-cyrus.jpg",
     },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,

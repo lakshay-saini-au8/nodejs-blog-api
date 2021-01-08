@@ -14,7 +14,7 @@ export const getAllArticle = asyncHandler(async (req, res) => {
   const articles = await Article.find()
     .sort({ createdAt: -1 })
     .populate("author", "username bio image");
-  res.status(200).json({ articles: articles });
+  res.status(200).json({ articlesCount: articles.length, articles: articles });
 });
 
 // @desc    Register a new article

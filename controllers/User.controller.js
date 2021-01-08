@@ -8,7 +8,10 @@ import { profileUpdateValidation } from "../utils/validation.js";
 
 export const getCurrentUser = asyncHandler(async (req, res) => {
   // find user
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).populate({
+    path: "followers following",
+    select: "username bio image",
+  });
   res.status(200).json({ user: user });
 });
 

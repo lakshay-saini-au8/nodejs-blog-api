@@ -6,6 +6,11 @@ import {
   getSingleArticle,
   updateArticle,
 } from "../controllers/Article.controller.js";
+import {
+  addComments,
+  deleteComment,
+  getComments,
+} from "../controllers/Comment.controller.js";
 import { protect } from "../middleware/Auth.middleware.js";
 const router = express.Router();
 
@@ -16,6 +21,7 @@ router
   .delete(protect, deletSingleArticle)
   .put(protect, updateArticle);
 
-router.route("/:slug/comments");
+router.route("/:slug/comments").post(protect, addComments).get(getComments);
 
+router.delete("/:slug/comments/:id", protect, deleteComment);
 export default router;

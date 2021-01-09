@@ -13,7 +13,8 @@ import {
 export const getAllArticle = asyncHandler(async (req, res) => {
   const articles = await Article.find()
     .sort({ createdAt: -1 })
-    .populate("author", "username bio image");
+    .populate("author ", "username bio image")
+    .populate("comments");
   res.status(200).json({ articlesCount: articles.length, articles: articles });
 });
 
